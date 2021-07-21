@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on SnufflePuff</title>
-    <link>/page/</link>
+    <link>https://aritra741.github.io/SnufflePuffBlog/page/</link>
     <description>Recent content in Pages on SnufflePuff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://aritra741.github.io/SnufflePuffBlog/page/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Archives</title>
-      <link>/archives/</link>
+      <link>https://aritra741.github.io/SnufflePuffBlog/archives/</link>
       <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/archives/</guid>
+      <guid>https://aritra741.github.io/SnufflePuffBlog/archives/</guid>
       <description></description>
     </item>
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://aritra741.github.io/SnufflePuffBlog/about/</link>
       <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://aritra741.github.io/SnufflePuffBlog/about/</guid>
       <description>Written in Go, Hugo is an open source static site generator available under the Apache Licence 2.0. Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
 Hugo makes use of a variety of open source projects including:
  https://github.</description>
@@ -29,10 +29,10 @@ Hugo makes use of a variety of open source projects including:
     
     <item>
       <title>Search</title>
-      <link>/search/</link>
+      <link>https://aritra741.github.io/SnufflePuffBlog/search/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/search/</guid>
+      <guid>https://aritra741.github.io/SnufflePuffBlog/search/</guid>
       <description></description>
     </item>
     
