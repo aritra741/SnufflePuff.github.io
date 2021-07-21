@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on SnufflePuff</title>
-    <link>https://aritra741.github.io/SnufflePuffBlog/post/</link>
+    <link>https://aritra741.github.io/post/</link>
     <description>Recent content in Posts on SnufflePuff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jul 2021 00:25:58 +0600</lastBuildDate><atom:link href="https://aritra741.github.io/SnufflePuffBlog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Jul 2021 00:25:58 +0600</lastBuildDate><atom:link href="https://aritra741.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>String series: Part 1</title>
-      <link>https://aritra741.github.io/SnufflePuffBlog/p/string-series-part-1/</link>
+      <link>https://aritra741.github.io/p/string-series-part-1/</link>
       <pubDate>Wed, 21 Jul 2021 00:25:58 +0600</pubDate>
       
-      <guid>https://aritra741.github.io/SnufflePuffBlog/p/string-series-part-1/</guid>
+      <guid>https://aritra741.github.io/p/string-series-part-1/</guid>
       <description>String related problems used to scare the shit out of me. Then I was introduced to some string suffix structures and it absolutely blew my mind. I don&#39;t claim to be an expert on suffix structures, but I hope my approach to solve the following problems will help you get some insight.
 Please keep in mind that this article is in no way an introduction to these data structures. I&#39;ll attach some links at the end.</description>
     </item>
