@@ -307,11 +307,11 @@ $ {f(i)= \mathrm{Number \thinspace of \thinspace query \thinspace strings \thins
 <p>Now, our next challenge is to figure out how we can calculate ${f(i)}$ and ${g(i)}$.</p>
 <p>Let's have a look at ${f(i)}$ first. We can define ${f(i)}$ like this as well:</p>
 <p>${f(i)= \mathrm{Number \thickspace of \thickspace query \thickspace strings \thickspace that \thickspace are \thickspace prefixes \thickspace of \thickspace the \thickspace suffix \thickspace starting \thickspace at \thickspace position \thickspace \bm{i} }}$</p>
-<p>We can find out the number of times a prefix of a suffix repeats in a string using suffix array. Since suffix array is always sorted, the occurrence of any prefix in a suffix will always be consecutive. So let's build a suffix array using the string t. Now for every query string, we can find out how many times it has occurred in string t using binary search. We will get a range in the suffix array where the string sj occurs. We'll then increment the counter for each position in the range. That's it! We're done with ${f(i)}$.</p>
-<p>Now getting back to ${g(i)}$, we can observe that this is exactly ${f(i)}$ for the reversed version of the string t! To calculate ${g(i)}$, we can just reverse t and perform the same operations as we did for ${f(i)}$.</p>
+<p>We can find out the number of times a prefix of a suffix repeats in a string using suffix array. Since suffix array is always sorted, the occurrence of any prefix in a suffix will always be consecutive. So let's build a suffix array using the string ${ \boldsymbol {t} }$. Now for every query string, we can find out how many times it has occurred in string ${ \boldsymbol {t} }$ using binary search. We will get a range in the suffix array where a query string occurs. We'll then increment the counter for each position in the range. That's it! We're done with ${f(i)}$.</p>
+<p>Now getting back to ${g(i)}$, we can observe that this is exactly ${f(i)}$ for the reversed version of the string ${ \boldsymbol{t} }$! To calculate ${g(i)}$, we can just reverse t and perform the same operations as we did for ${f(i)}$.</p>
 <p>Now we can just loop through each position and calculate the answer.</p>
 <p>My code:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
 </span><span class="cp">#define ll long long
 </span><span class="cp">#define M 200007
 </span><span class="cp">#define mod 1000000007
