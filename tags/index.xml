@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on SnufflePuff</title>
-    <link>https://aritra741.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on SnufflePuff</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Jul 2021 00:25:58 +0600</lastBuildDate><atom:link href="https://aritra741.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Jul 2021 00:25:58 +0600</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Suffix Structures</title>
-      <link>https://aritra741.github.io/tags/suffix-structures/</link>
+      <link>/tags/suffix-structures/</link>
       <pubDate>Wed, 21 Jul 2021 00:25:58 +0600</pubDate>
       
-      <guid>https://aritra741.github.io/tags/suffix-structures/</guid>
+      <guid>/tags/suffix-structures/</guid>
       <description></description>
     </item>
     
