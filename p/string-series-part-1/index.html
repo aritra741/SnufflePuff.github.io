@@ -298,7 +298,7 @@ Please keep in mind that this article is in no way an introduction to these data
 		
 	</figure></p>
 <p>Problem link: <a class="link" href="https://codeforces.com/contest/1202/problem/E"  target="_blank" rel="noopener"
-    >Problem - E - Codeforces</a></p>
+    >You Are Given Some Strings.. - Codeforces</a></p>
 <p>Since the constraints are in the ${ \ 2.10^5 }$ ballpark, we can't even dare to think of bruteforce here. Even though the problem deals with string concatenation, we'll now see why we don't need to concatenate anything.</p>
 <p>Let,
 $ {f(i)= \mathrm{Number \thinspace of \thinspace query \thinspace strings \thinspace \bm{starting} \thinspace at \thinspace position \thinspace \bm{i}} } $</p>
@@ -511,6 +511,181 @@ $ {f(i)= \mathrm{Number \thinspace of \thinspace query \thinspace strings \thins
         <span class="n">ans</span><span class="o">+=</span> <span class="p">(</span> <span class="n">shuru</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">shesh</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
     
     <span class="n">cout</span><span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="toph--distinctness"><strong>Toph- Distinctness</strong></h2>
+<p>Problem statement:
+<figure style="flex-grow: 378; flex-basis: 909px">
+		<a href="/p/string-series-part-1/distinctness.PNG" data-size="1159x306"><img src="/p/string-series-part-1/distinctness.PNG"
+				srcset="/p/string-series-part-1/distinctness_hud48233fed812f0953bc5f65049ea51af_40670_480x0_resize_box_3.PNG 480w, /p/string-series-part-1/distinctness_hud48233fed812f0953bc5f65049ea51af_40670_1024x0_resize_box_3.PNG 1024w"
+				width="1159"
+				height="306"
+				loading="lazy"
+				alt="Problem Statement">
+		</a>
+		
+		<figcaption>Problem Statement</figcaption>
+		
+	</figure></p>
+<p>Problem link: <a class="link" href="https://toph.co/p/distinctness"  target="_blank" rel="noopener"
+    >Distinctness- Toph</a></p>
+<p>Let's get straight to the point. If you know how <strong>suffix automaton</strong> actuallyworks, this is a straightforward problem for you.</p>
+<p>Each node in a suffix automaton corresponds to one or more <strong>unique</strong> substrings of the original string. What do they have in common? All of those substrings end in the same position(s) in the original string. Everytime we add a new character at the end of the original string, we create <strong>at least 1</strong> new substring (why?). Suppose we have a string ${\text{\textquoteleft} aab \text{\textquoteright}}$ and we have created a suffix automaton using this string. If we add a ${\text{\textquoteleft} c \text{\textquoteright}}$ at the end, we know for sure that we're creating a new unique substring of length 4 (${\text{\textquoteleft} aabc \text{\textquoteright}}$). If we add this character to the automaton, the string ${\text{\textquoteleft} aabc \text{\textquoteright}}$ will belong to a node that corresponds to all the unique substrings that end at position 4. This means that we know how many unique substrings end at position 4; which implies that we have found out the number of new unique substrings we have created. If the substring ${\text{\textquoteleft} aabc \text{\textquoteright}}$ belongs to the node ${\mathrm{curr}}$ , then
+The number of new substrings= ${\mathrm{ len(curr)-len(suffixLink(curr))}}$ .</p>
+<p>${\mathrm{ans(i)= ans(i-1)+len(curr)-len(suffixLink(curr))}}$</p>
+<p>My code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
+</span><span class="cp">#define ll long long
+</span><span class="cp">#define sc second
+</span><span class="cp">#define mod 1000000007
+</span><span class="cp">#define mx 400010
+</span><span class="cp">#define inf 2e9
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="n">mx</span><span class="p">];</span>
+<span class="kt">bool</span> <span class="n">f</span><span class="p">;</span>
+<span class="n">ll</span> <span class="n">ans</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Automata</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">struct</span> <span class="nc">data</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">link</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">dist</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">valid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">next</span><span class="p">[</span><span class="mi">27</span><span class="p">]</span> <span class="p">;</span>
+
+        <span class="n">data</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">(</span><span class="kt">int</span> <span class="n">link</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="o">:</span> <span class="n">link</span><span class="p">(</span><span class="n">link</span><span class="p">),</span> <span class="n">len</span><span class="p">(</span><span class="n">len</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="p">};</span>
+
+    <span class="n">data</span> <span class="o">*</span><span class="n">node</span> <span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">visfordfs</span><span class="p">[</span><span class="n">mx</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="n">last</span> <span class="p">;</span>
+    <span class="n">set</span><span class="o">&lt;</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">st</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">reset</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">valid</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">link</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">;</span>
+        <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">len</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+        <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">next</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">next</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">Automata</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="n">Automata</span><span class="p">(</span><span class="kt">int</span> <span class="n">mx_len</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">mx_len</span> <span class="o">+=</span> <span class="mi">7</span> <span class="p">;</span>
+        <span class="n">mx_len</span> <span class="o">=</span> <span class="n">mx_len</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">data</span><span class="p">[</span><span class="n">mx_len</span><span class="p">]</span> <span class="p">;</span>
+
+        <span class="n">memset</span><span class="p">(</span><span class="n">visfordfs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">visfordfs</span><span class="p">));</span>
+
+        <span class="n">reset</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">addLetter</span><span class="p">(</span><span class="kt">char</span> <span class="n">ch</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">num</span><span class="o">++</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">let</span> <span class="o">=</span> <span class="n">ch</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span> <span class="p">;</span>
+        <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">last</span> <span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">valid</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">len</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">last</span><span class="p">].</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">;</span>
+        <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">insert</span><span class="p">({</span><span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">len</span><span class="p">,</span> <span class="n">cur</span><span class="p">});</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">next</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">next</span><span class="p">));</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">last</span> <span class="p">;</span> <span class="n">p</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">let</span><span class="p">]</span> <span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">link</span><span class="p">)</span>
+            <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">let</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur</span> <span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">link</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">let</span><span class="p">]</span> <span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">node</span><span class="p">[</span><span class="n">q</span><span class="p">].</span><span class="n">len</span><span class="p">)</span>
+                <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">link</span> <span class="o">=</span> <span class="n">q</span> <span class="p">;</span>
+
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="kt">int</span> <span class="n">clone</span> <span class="o">=</span> <span class="n">num</span><span class="o">++</span><span class="p">;</span>
+
+                <span class="n">node</span><span class="p">[</span><span class="n">clone</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="p">;</span>
+                <span class="n">node</span><span class="p">[</span><span class="n">clone</span><span class="p">].</span><span class="n">len</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">;</span>
+                <span class="n">node</span><span class="p">[</span><span class="n">clone</span><span class="p">].</span><span class="n">valid</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">node</span><span class="p">[</span><span class="n">clone</span><span class="p">].</span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">st</span><span class="p">.</span><span class="n">insert</span><span class="p">({</span><span class="n">node</span><span class="p">[</span><span class="n">clone</span><span class="p">].</span><span class="n">len</span><span class="p">,</span> <span class="n">clone</span><span class="p">});</span>
+
+                <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">let</span><span class="p">]</span> <span class="o">==</span> <span class="n">q</span> <span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">link</span><span class="p">)</span>
+                    <span class="n">node</span><span class="p">[</span><span class="n">p</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">let</span><span class="p">]</span> <span class="o">=</span> <span class="n">clone</span> <span class="p">;</span>
+
+                <span class="n">node</span><span class="p">[</span><span class="n">q</span><span class="p">].</span><span class="n">link</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">link</span> <span class="o">=</span> <span class="n">clone</span> <span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span> <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">link</span><span class="o">&gt;-</span><span class="mi">1</span> <span class="p">)</span>
+            <span class="n">ans</span><span class="o">+=</span> <span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">len</span><span class="o">-</span><span class="n">node</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">link</span><span class="p">].</span><span class="n">len</span><span class="p">;</span> <span class="c1">// Adding the new ones
+</span><span class="c1"></span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">cur</span> <span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">count_sub_str</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span> <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">rbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">st</span><span class="p">.</span><span class="n">rend</span><span class="p">();</span> <span class="n">it</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">node</span><span class="p">[</span> <span class="n">node</span><span class="p">[</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">sc</span><span class="p">].</span><span class="n">link</span> <span class="p">].</span><span class="n">cnt</span> <span class="o">+=</span> <span class="n">node</span><span class="p">[</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">sc</span><span class="p">].</span><span class="n">cnt</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="nf">count_valid_sub_str</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span> <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">rbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">st</span><span class="p">.</span><span class="n">rend</span><span class="p">();</span> <span class="n">it</span><span class="o">++</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">node</span><span class="p">[</span> <span class="n">node</span><span class="p">[</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">sc</span><span class="p">].</span><span class="n">link</span> <span class="p">].</span><span class="n">valid</span> <span class="o">+=</span> <span class="n">node</span><span class="p">[</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">sc</span><span class="p">].</span><span class="n">valid</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+
+    <span class="kt">void</span> <span class="nf">count_dist_str</span><span class="p">(</span> <span class="kt">int</span> <span class="n">x</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">dist</span> <span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+
+        <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">dist</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">26</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">count_dist_str</span><span class="p">(</span> <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">);</span>
+                <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">dist</span> <span class="o">+=</span> <span class="n">node</span><span class="p">[</span> <span class="n">node</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">].</span><span class="n">dist</span> <span class="p">;</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Automata</span> <span class="n">sa</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sz</span><span class="p">;</span>
+    
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+    <span class="n">sz</span><span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+
+    <span class="n">sa</span> <span class="o">=</span> <span class="n">Automata</span><span class="p">(</span> <span class="n">sz</span> <span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sz</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">sa</span><span class="p">.</span><span class="n">addLetter</span><span class="p">(</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">);</span>
+        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">ans</span><span class="o">&lt;&lt;</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+
 <span class="p">}</span>
 </code></pre></div>
 </section>
@@ -733,6 +908,7 @@ $ {f(i)= \mathrm{Number \thinspace of \thinspace query \thinspace strings \thins
   <ol>
     <li><a href="#codeforces-gym-101991e--exciting-menus"><strong>Codeforces GYM 101991E- Exciting Menus</strong></a></li>
     <li><a href="#codeforces-1202e---you-are-given-some-strings"><strong>Codeforces 1202E-</strong>  <strong>You Are Given Some Strings&hellip;</strong></a></li>
+    <li><a href="#toph--distinctness"><strong>Toph- Distinctness</strong></a></li>
   </ol>
 </nav>
                 </div>
