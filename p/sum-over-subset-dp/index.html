@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='The best way to learn about SOS DP would probably be This blog on codeforces. But I always tend to forget how the recurrence relation is constructed and have to revisit this blog over and over again.
+If you&#39;ve now understood how this whole SOS DP thing works, we can dive into some problems.
+Codeforces 165E- Compatible Numbers Problem Statement : Two numbers are &amp;quot;compatible&amp;quot; if the result of their bitwise AND equals zero.'><title>Sum Over Subset DP</title>
+
+<link rel='canonical' href='https://aritra741.github.io/p/sum-over-subset-dp/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Sum Over Subset DP'>
+<meta property='og:description' content='The best way to learn about SOS DP would probably be This blog on codeforces. But I always tend to forget how the recurrence relation is constructed and have to revisit this blog over and over again.
+If you&#39;ve now understood how this whole SOS DP thing works, we can dive into some problems.
+Codeforces 165E- Compatible Numbers Problem Statement : Two numbers are &amp;quot;compatible&amp;quot; if the result of their bitwise AND equals zero.'>
+<meta property='og:url' content='https://aritra741.github.io/p/sum-over-subset-dp/'>
+<meta property='og:site_name' content='SnufflePuff'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-07-29T12:23:59&#43;06:00'/><meta property='article:modified_time' content='2021-07-29T12:23:59&#43;06:00'/><meta property='og:image' content='https://aritra741.github.io/p/sum-over-subset-dp/pexels-fiona-art-5022849.jpg' />
+<meta name="twitter:title" content="Sum Over Subset DP">
+<meta name="twitter:description" content="The best way to learn about SOS DP would probably be This blog on codeforces. But I always tend to forget how the recurrence relation is constructed and have to revisit this blog over and over again.
+If you&#39;ve now understood how this whole SOS DP thing works, we can dive into some problems.
+Codeforces 165E- Compatible Numbers Problem Statement : Two numbers are &amp;quot;compatible&amp;quot; if the result of their bitwise AND equals zero."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://aritra741.github.io/p/sum-over-subset-dp/pexels-fiona-art-5022849.jpg' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="https://aritra741.github.io/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/sum-over-subset-dp/">
+                <img src="/p/sum-over-subset-dp/pexels-fiona-art-5022849_hu3d03a01dcc18bc5be0e67db3d8d209a6_241605_800x0_resize_q75_box.jpg"
+                        srcset="/p/sum-over-subset-dp/pexels-fiona-art-5022849_hu3d03a01dcc18bc5be0e67db3d8d209a6_241605_800x0_resize_q75_box.jpg 800w, /p/sum-over-subset-dp/pexels-fiona-art-5022849_hu3d03a01dcc18bc5be0e67db3d8d209a6_241605_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="449" 
+                        loading="lazy"
+                        alt="Featured image of post Sum Over Subset DP" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/sum-over-subset-dp/">Sum Over Subset DP</a>
+    </h2>
+
+    <footer class="article-time">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <time class="article-time--published">Jul 29, 2021</time>
+    </footer></div>
+</header>
+
+    <section class="article-content">
+    <p>The best way to learn about SOS DP would probably be <a class="link" href="https://codeforces.com/blog/entry/45223"  target="_blank" rel="noopener"
+    >This blog</a> on codeforces. But I always tend to forget how the recurrence relation is constructed and have to revisit this blog over and over again.</p>
+<p>If you've now understood how this whole SOS DP thing works, we can dive into some problems.</p>
+<h2 id="codeforces-165e--compatible--numbers"><strong>Codeforces 165E- Compatible</strong>  <strong>Numbers</strong></h2>
+<p><strong>Problem Statement</strong> : Two numbers are &quot;compatible&quot; if the result of their bitwise AND equals zero. You are given an array of ${n}$ integers. Your task is to find the following for each array element: is this element compatible with some other element from the given array? If the answer to this question is positive, then you also should find any suitable element.</p>
+<p><strong>Problem link</strong> : <a class="link" href="https://codeforces.com/contest/165/problem/E"  target="_blank" rel="noopener"
+    >Problem - E - Codeforces</a></p>
+<p><strong>Solution</strong> : Suppose we're working with a number ${x}$ from the array. A number ${z}$ will be compatible with ${x}$ if for every ${1}$ bit in ${x}$, there is a ${0}$ bit in ${z}$.</p>
+<p>Let's invert all bits of ${x}$ and call it ${y}$. We've now made sure that ${y}$ has no common ${1}$ bit with ${x}$. Clearly, ${y}$ is compatible with ${x}$ . Now, even if we turn some ${1}$ bit of ${y}$ into ${0}$, the number is still compatible with ${x}$. Because we're not adding any new ${1}$s in ${y}$. So, any subset of ${y}$ is compatible with ${x}$. Suppose we can count the number of subsets of ${y}$ that occur in the given array. If that number is non-zero, then our answer is yes; otherwise no.</p>
+<p>Let,</p>
+<p>$dp[y][i]= \text{Number of occurrences of the subsets of y,} $
+$\text{if we're only allowed to change the first i bits of y}$</p>
+<p>Now let's construct the recurrence. If the ith bit of ${y}$ is ${0}$, then we can't change it ( we can't add any new 1s, remember? ). If the ith bit is ${1}$, we can either keep it that way, or we can change it to ${0}$.</p>
+<p>So when the ith bit is ${0}$,</p>
+<p>$dp[y][i]= dp[y][i-1]$</p>
+<p>Otherwise,</p>
+<p>$dp[y][i]= dp[y][i-1]+dp[y \oplus 2^i][i-1]$ ( Either keep the ${1}$, or remove it )</p>
+<p>Unfortunately, we can only count the number of occurrences using this dp definition. But we also need to output a compatible number for each array element.</p>
+<p>Let's redefine the dp definition now,</p>
+<p>$dp[y][i]= \text{Any array element that is a subset of y,}$
+$ \text{if we're allowed to change only the first i bits} $</p>
+<p>The redefined recurrence relation will be,</p>
+<p>If the ith bit is 0,</p>
+<p>$dp[y][i]= dp[y][i-1]$</p>
+<p>Otherwise,</p>
+<p>$dp[y][i]= dp[y][i-1]? dp[y][i-1]:dp[y \oplus 2^i ][i-1]$</p>
+<p>What should be the base case? If we&rsquo;re not allowed to change any bits, then</p>
+<p>if $y$ exists in the array,
+$dp[y][0]= y$</p>
+<p>else,</p>
+<p>$dp[y][0]= 0$</p>
+<p>Here's my code:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="cp">#include</span> <span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
+</span><span class="cp">#define fast ios_base::sync_with_stdio(0);cin.tie(0);
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">2</span><span class="p">][(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">22</span><span class="p">)</span><span class="o">+</span><span class="mi">7</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">fast</span><span class="p">;</span>
+
+	<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+	<span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">n</span><span class="p">;</span>
+
+	<span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">5</span><span class="p">];</span>
+
+	<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+		<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+	<span class="p">}</span>	
+
+	<span class="kt">int</span> <span class="n">f</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+	<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="mi">22</span><span class="p">;</span><span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">y</span><span class="o">&lt;</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">22</span><span class="p">);</span><span class="n">y</span><span class="o">++</span> <span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span> <span class="n">y</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">)</span>
+				<span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="o">^</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">?</span><span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="o">^</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">:</span><span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="o">^</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="o">^</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))];</span>
+			<span class="k">else</span>
+				<span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">f</span><span class="o">^</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">];</span>
+		<span class="p">}</span>
+
+		<span class="n">f</span><span class="o">^=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span> <span class="p">)</span>
+	<span class="p">{</span>
+		<span class="kt">int</span> <span class="n">y</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+		<span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">22</span><span class="p">;</span><span class="n">j</span><span class="o">++</span> <span class="p">)</span>
+			<span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="p">))</span> <span class="p">)</span>
+				<span class="n">y</span><span class="o">+=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="p">;</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">y</span><span class="p">])</span>
+			<span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+		<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s">&#34; &#34;</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+     
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2021 SnufflePuff
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="2.5.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#codeforces-165e--compatible--numbers"><strong>Codeforces 165E- Compatible</strong>  <strong>Numbers</strong></a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
