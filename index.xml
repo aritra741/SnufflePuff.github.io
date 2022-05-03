@@ -597,7 +597,22 @@ The number of new substrings= ${\mathrm{ len(curr)-len(suffixLink(curr))}}$ .&lt
     &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 
 &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Resources:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cp-algorithms.com/string/suffix-array.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cp-algorithms.com/string/suffix-array.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://discuss.codechef.com/t/a-tutorial-on-suffix-arrays/2950/3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://discuss.codechef.com/t/a-tutorial-on-suffix-arrays/2950/3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://web.stanford.edu/class/cs97si/suffix-array.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://web.stanford.edu/class/cs97si/suffix-array.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cp-algorithms.com/string/aho_corasick.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cp-algorithms.com/string/aho_corasick.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://codeforces.com/blog/entry/14854&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://codeforces.com/blog/entry/14854&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cp-algorithms.com/string/suffix-automaton.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cp-algorithms.com/string/suffix-automaton.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
         </item>
         
     </channel>
